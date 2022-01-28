@@ -1,29 +1,36 @@
+import "antd/dist/antd.css";
 import './App.css';
-import Timer from "./Timer";
 import Settings from "./Settings";
 import {useState} from "react";
 import SettingsContext from "./SettingsContext";
+import Habits from "./components/Habits";
 
 function App() {
 
-  const [showSettings, setShowSettings] = useState(false);
-  const [workMinutes, setWorkMinutes] = useState(45);
-  const [breakMinutes, setBreakMinutes] = useState(15);
+    // Initial setting one descending clock
+    const [data, setData] = useState([{
+        'type':"time-descend",
+                     "name":"custom text",
+                        "value": 30
+            }])
+    const [settings, showSettings] = useState(false)
+    // 两个主要的状态 工作时间 休息时间 被提升到App首页
+    //{habits: [{'type':time-ascend,
+    //          "name":"custom text",
+    //             "value": Integer
+    // }]
+    //
+    return (
+        <main>
 
-  return (
-    <main>
-      <SettingsContext.Provider value={{
-        showSettings,
-        setShowSettings,
-        workMinutes,
-        breakMinutes,
-        setWorkMinutes,
-        setBreakMinutes,
-      }}>
-        {showSettings ? <Settings /> : <Timer />}
-      </SettingsContext.Provider>
-    </main>
-  );
+            <SettingsContext.Provider value={{
+                data,
+                setData,
+            }}>
+                {settings ? <Settings /> : <Habits />}
+            </SettingsContext.Provider>
+        </main>
+    );
 }
 
 export default App;
